@@ -1,0 +1,6 @@
+{
+  "name": "Biryani Junction",
+  "description": "Authentic fresh biryani takeaway and dine-in at Mantra City 360, Talegaon Dabhade. Call or order on WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
