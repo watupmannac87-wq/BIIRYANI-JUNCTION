@@ -83,8 +83,8 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     id: "cb-1",
     category: "Chicken Biryani",
-    name: "Chicken Dum Biryani (Special)",
-    description: "Tender chicken pieces marinated in yogurt and 21 aromatic royal spices, slow-cooked with aged long-grain basmati rice.",
+    name: "Hyderabadi Chicken Dum Biryani",
+    description: "Tender spiced chicken slow-cooked with aged long-grain basmati rice, fried mint, saffron milk, and caramelized birista onions.",
     price: 240,
     portion: "Half / Full",
     serves: "1-2 Persons",
@@ -97,18 +97,18 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "cb-2",
     category: "Chicken Biryani",
     name: "Boneless Chicken Tikka Biryani",
-    description: "Smoky tandoor-roasted chicken tikka tossed in spicy gravy, layered with saffron fragrant rice and fried onions.",
+    description: "Tender boneless chicken tikka tossed in spicy roasted gravy and layered with fragrant basmati rice and fresh lemon wedges.",
     price: 270,
     portion: "Full",
     serves: "1-2 Persons",
     spiceLevel: "Medium",
     dietType: "non-veg",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
+    image: "/src/assets/images/dish_boneless_biryani_1793952190741.jpg"
   },
   {
     id: "cb-3",
     category: "Chicken Biryani",
-    name: "Hyderabadi Chicken Biryani Handi",
+    name: "Clay Handi Chicken Biryani",
     description: "Traditional sealed earthen handi dum biryani served with spicy Mirchi Ka Salan and fresh cooling mint raita.",
     price: 320,
     portion: "Clay Handi (750g)",
@@ -117,13 +117,26 @@ export const MENU_ITEMS: MenuItem[] = [
     dietType: "non-veg",
     image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
   },
+  {
+    id: "cb-4",
+    category: "Chicken Biryani",
+    name: "Royal Biryani Combo Feast",
+    description: "Full portion chicken dum biryani served with creamy cucumber mint raita, spicy Mirchi Ka Salan, boiled egg, and a refreshing beverage.",
+    price: 299,
+    portion: "Complete Combo",
+    serves: "1-2 Persons",
+    spiceLevel: "Medium",
+    dietType: "non-veg",
+    isBestseller: true,
+    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
+  },
 
   // --- MUTTON BIRYANI ---
   {
     id: "mb-1",
     category: "Mutton Biryani",
     name: "Royal Mutton Dum Biryani",
-    description: "Prime bone-in mutton pieces slow-cooked to melt-in-mouth perfection with saffron-infused basmati rice, kewra, and roasted cashews.",
+    description: "Succulent bone-in mutton pieces simmered in royal spices, kewra, and roasted cashews layered with fragrant saffron basmati rice.",
     price: 340,
     portion: "Standard Pot",
     serves: "1-2 Persons",
@@ -136,13 +149,13 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "mb-2",
     category: "Mutton Biryani",
     name: "Mutton Handi Biryani (Family Pack)",
-    description: "Generous handi portion of succulent tender mutton and aromatic dum rice, simmered over charcoal wood fire.",
+    description: "Generous traditional clay handi of melt-in-mouth tender mutton and aromatic dum rice, slow-simmered over charcoal wood fire.",
     price: 640,
     portion: "Handi Family (1.2kg)",
     serves: "3-4 Persons",
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
-    image: "/src/assets/images/dish_mutton_biryani_1793951326937.jpg"
+    image: "/src/assets/images/dish_mutton_handi_family_1793952192406.jpg"
   },
 
   // --- VEG BIRYANI ---
@@ -150,7 +163,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "vb-1",
     category: "Veg Biryani",
     name: "Royal Paneer Tikka Dum Biryani",
-    description: "Char-grilled fresh cottage cheese cubes, seasoned with garden herbs, caramelized birista, and saffron infused rice.",
+    description: "Char-grilled fresh cottage cheese cubes, seasoned with garden herbs, caramelized birista, and saffron infused basmati rice.",
     price: 210,
     portion: "Standard Plate",
     serves: "1-2 Persons",
@@ -163,13 +176,13 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "vb-2",
     category: "Veg Biryani",
     name: "Subz Handi Dum Biryani",
-    description: "Fresh farm vegetables including cauliflower florets, french beans, carrots, and green peas slow cooked in aromatic herbs.",
+    description: "Colorful fresh vegetables including green peas, diced carrots, french beans, and cauliflower tossed in aromatic herbs and basmati.",
     price: 190,
     portion: "Standard Plate",
     serves: "1-2 Persons",
     spiceLevel: "Medium",
     dietType: "veg",
-    image: "/src/assets/images/dish_veg_paneer_biryani_1793951327983.jpg"
+    image: "/src/assets/images/dish_subz_veg_biryani_1793952191645.jpg"
   },
 
   // --- STARTERS ---
@@ -177,7 +190,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "st-1",
     category: "Starters",
     name: "Chicken Tikka Kebab (8 Pcs)",
-    description: "Boneless juicy chicken chunks marinated in mustard oil, hung curd, and roasted degi mirch, char-grilled with mint dip.",
+    description: "Juicy chicken chunks marinated in mustard oil, hung curd, and roasted degi mirch, char-grilled with mint dip and sliced onions.",
     price: 220,
     portion: "8 Pieces",
     serves: "2 Persons",
@@ -190,19 +203,19 @@ export const MENU_ITEMS: MenuItem[] = [
     id: "st-2",
     category: "Starters",
     name: "Crispy Chicken Lollipop (6 Pcs)",
-    description: "Classic Indo-Chinese crispy chicken wings tossed in garlic schezwan glaze, served with spicy dip.",
+    description: "Crispy Indo-Chinese chicken lollipops with foil-wrapped handles and spicy fiery schezwan glaze, served with fresh lemon.",
     price: 200,
     portion: "6 Pieces",
     serves: "2 Persons",
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
-    image: "/src/assets/images/dish_tandoori_starter_1793951326949.jpg"
+    image: "/src/assets/images/dish_chicken_lollipop_1793952189750.jpg"
   },
   {
     id: "st-3",
     category: "Starters",
-    name: "Paneer Malai Tikka (6 Pcs)",
-    description: "Mouth-melting paneer cubes marinated in rich cashew cream, cardamom, and fresh coriander, grilled to golden perfection.",
+    name: "Paneer Tikka Starter (6 Pcs)",
+    description: "Tender spiced paneer cubes marinated in rich cashew cream and herbs, grilled with peppers and served with mint chutney.",
     price: 190,
     portion: "6 Pieces",
     serves: "2 Persons",
@@ -215,36 +228,36 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     id: "dr-1",
     category: "Drinks",
-    name: "Royal Mango Lassi",
-    description: "Thick, creamy Alphonso mango blended with rich chilled curd and a touch of cardamom and pistachio slivers.",
+    name: "Royal Mango Lassi (Clay Kulhad)",
+    description: "Thick, chilled Alphonso mango blended with rich creamy curd, cardamom, and garnished with saffron strands and pistachios.",
     price: 70,
     portion: "300ml Kulhad",
     serves: "1 Person",
     dietType: "veg",
     isBestseller: true,
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
+    image: "/src/assets/images/dish_mango_lassi_1793952192796.jpg"
   },
   {
     id: "dr-2",
     category: "Drinks",
-    name: "Masala Chaas (Spiced Buttermilk)",
+    name: "Masala Chaas & Fresh Raita",
     description: "Traditional refreshing churned buttermilk tempered with roasted cumin, rock salt, ginger, and fresh mint leaves.",
     price: 40,
     portion: "300ml Glass",
     serves: "1 Person",
     dietType: "veg",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
+    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
   },
   {
     id: "dr-3",
     category: "Drinks",
     name: "Fresh Nimbu Shikanji",
-    description: "Tangy Indian lemonade with squeezed fresh lemons, black salt, and freshly crushed mint.",
+    description: "Tangy Indian lemonade with freshly squeezed lemons, black rock salt, cumin, and fresh crushed mint leaves.",
     price: 45,
     portion: "350ml Glass",
     serves: "1 Person",
     dietType: "veg",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
+    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
   }
 ];
 
@@ -254,39 +267,57 @@ export const MENU_ITEMS: MenuItem[] = [
 export const GALLERY_ITEMS = [
   {
     title: "Clay Handi Dum Biryani",
-    caption: "Slow-cooked over natural charcoal embers",
+    caption: "Slow-cooked over natural charcoal embers with aromatic steam",
     image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg",
     tag: "Signature Dish"
   },
   {
-    title: "Chicken Dum Biryani",
-    caption: "Tender chicken marinated in royal spices",
+    title: "Hyderabadi Chicken Dum Biryani",
+    caption: "Tender spiced chicken with saffron-tinted aged basmati rice",
     image: "/src/assets/images/dish_chicken_biryani_1793951326719.jpg",
     tag: "Bestseller"
   },
   {
-    title: "Royal Mutton Biryani",
-    caption: "Succulent meat with saffron basmati layers",
+    title: "Royal Mutton Copper Thali",
+    caption: "Succulent mutton pieces layered with birista and cashews",
     image: "/src/assets/images/dish_mutton_biryani_1793951326937.jpg",
     tag: "Chef Special"
   },
   {
-    title: "Sizzling Tandoor Starters",
-    caption: "Char-grilled fresh with mint chutney",
-    image: "/src/assets/images/dish_tandoori_starter_1793951326949.jpg",
+    title: "Grand Mutton Dum Handi",
+    caption: "Overflowing family handi with prime bone-in tender cuts",
+    image: "/src/assets/images/dish_mutton_handi_family_1793952192406.jpg",
+    tag: "Family Handi"
+  },
+  {
+    title: "Biryani Combo Feast",
+    caption: "Served with cooling mint raita, mirchi ka salan, and boiled egg",
+    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg",
+    tag: "Complete Meal"
+  },
+  {
+    title: "Crispy Chicken Lollipop",
+    caption: "Spicy Indo-Chinese starters with fiery schezwan sauce",
+    image: "/src/assets/images/dish_chicken_lollipop_1793952189750.jpg",
     tag: "Starters"
   },
   {
-    title: "Royal Paneer Biryani",
-    caption: "Fresh cottage cheese cooked in authentic dum",
-    image: "/src/assets/images/dish_veg_paneer_biryani_1793951327983.jpg",
+    title: "Sizzling Tandoori Kebabs",
+    caption: "Char-grilled fresh chicken tikka with mint chutney",
+    image: "/src/assets/images/dish_tandoori_starter_1793951326949.jpg",
+    tag: "Tandoor Fresh"
+  },
+  {
+    title: "Subz Vegetable Dum Handi",
+    caption: "Farm fresh garden vegetables in authentic dum spices",
+    image: "/src/assets/images/dish_subz_veg_biryani_1793952191645.jpg",
     tag: "Pure Veg Choice"
   },
   {
-    title: "Fresh Handcrafted Quality",
-    caption: "Made fresh daily in Talegaon Dabhade",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg",
-    tag: "Mantra City 360"
+    title: "Chilled Mango Lassi Kulhad",
+    caption: "Rich Alphonso mango lassi topped with saffron & pistachios",
+    image: "/src/assets/images/dish_mango_lassi_1793952192796.jpg",
+    tag: "Cooler"
   }
 ];
 
