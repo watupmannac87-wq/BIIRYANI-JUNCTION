@@ -11,7 +11,6 @@ import {
   Clock,
   Star,
   Flame,
-  Award,
   Zap,
   Tag,
   Menu as MenuIcon,
@@ -23,6 +22,93 @@ import {
   Send,
   Navigation
 } from 'lucide-react';
+
+/* ==========================================================================
+   DIRECT ASSET IMPORTS (BUNDLED VIA VITE FOR 100% RELIABILITY)
+   These resolve properly in both development server and production builds.
+   ========================================================================== */
+import heroBiryaniPotImg from './assets/images/hero_biryani_pot_1793951325565.jpg';
+import dishChickenBiryaniImg from './assets/images/dish_chicken_biryani_1793951326719.jpg';
+import dishBonelessBiryaniImg from './assets/images/dish_boneless_biryani_1793952190741.jpg';
+import dishMuttonBiryaniImg from './assets/images/dish_mutton_biryani_1793951326937.jpg';
+import dishMuttonHandiImg from './assets/images/dish_mutton_handi_family_1793952192406.jpg';
+import dishVegPaneerImg from './assets/images/dish_veg_paneer_biryani_1793951327983.jpg';
+import dishSubzBiryaniImg from './assets/images/dish_subz_veg_biryani_1793952191645.jpg';
+import dishStarterKebabImg from './assets/images/dish_tandoori_starter_1793951326949.jpg';
+import dishLollipopImg from './assets/images/dish_chicken_lollipop_1793952189750.jpg';
+import comboFeastImg from './assets/images/combo_biryani_feast_1793952193238.jpg';
+import mangoLassiImg from './assets/images/dish_mango_lassi_1793952192796.jpg';
+
+/* ==========================================================================
+   RESILIENT FOOD IMAGE COMPONENT WITH MULTI-TIER FALLBACK
+   Prevents broken image icons or missing frames from ever rendering.
+   ========================================================================== */
+interface FoodImageProps {
+  src: string;
+  fallbackSrc?: string;
+  alt: string;
+  className?: string;
+  imgClassName?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+function FoodImage({
+  src,
+  fallbackSrc = '/images/hero_biryani_pot.jpg',
+  alt,
+  className = '',
+  imgClassName = '',
+  loading = 'lazy'
+}: FoodImageProps) {
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const [hasFailedAll, setHasFailedAll] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  React.useEffect(() => {
+    setCurrentSrc(src);
+    setHasFailedAll(false);
+    setIsLoaded(false);
+  }, [src]);
+
+  const handleError = () => {
+    if (fallbackSrc && currentSrc !== fallbackSrc) {
+      setCurrentSrc(fallbackSrc);
+    } else {
+      setHasFailedAll(true);
+    }
+  };
+
+  if (hasFailedAll) {
+    return (
+      <div className={`relative flex flex-col items-center justify-center p-4 text-center bg-gradient-to-br from-[#8B1B15] to-[#540E0A] text-white ${className}`}>
+        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-2">
+          <Flame className="w-5 h-5 text-amber-300" />
+        </div>
+        <p className="font-display text-sm font-bold line-clamp-1">{alt}</p>
+        <span className="text-[11px] text-amber-200/90 mt-0.5">Biryani Junction · Fresh Dum</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`relative overflow-hidden bg-stone-900/10 ${className}`}>
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-stone-200/50 animate-pulse flex items-center justify-center pointer-events-none">
+          <Flame className="w-6 h-6 text-amber-500/25" />
+        </div>
+      )}
+      <img
+        src={currentSrc}
+        alt={alt}
+        loading={loading}
+        referrerPolicy="no-referrer"
+        onLoad={() => setIsLoaded(true)}
+        onError={handleError}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${imgClassName}`}
+      />
+    </div>
+  );
+}
 
 /* ==========================================================================
    1. EDITABLE BUSINESS CONFIGURATION & DETAILS
@@ -52,7 +138,6 @@ export const RESTAURANT_CONFIG = {
 
 /* ==========================================================================
    2. EDITABLE MENU ITEMS & CATEGORIES
-   Add, remove, or modify items, descriptions, and prices below.
    ========================================================================== */
 export interface MenuItem {
   id: string;
@@ -61,6 +146,7 @@ export interface MenuItem {
   description: string;
   price: number;
   image: string;
+  fallbackImage?: string;
   isBestseller?: boolean;
   portion: string;
   serves: string;
@@ -91,7 +177,8 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
     isBestseller: true,
-    image: "/src/assets/images/dish_chicken_biryani_1793951326719.jpg"
+    image: dishChickenBiryaniImg,
+    fallbackImage: "/images/dish_chicken_biryani.jpg"
   },
   {
     id: "cb-2",
@@ -103,7 +190,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "1-2 Persons",
     spiceLevel: "Medium",
     dietType: "non-veg",
-    image: "/src/assets/images/dish_boneless_biryani_1793952190741.jpg"
+    image: dishBonelessBiryaniImg,
+    fallbackImage: "/images/dish_boneless_biryani.jpg"
   },
   {
     id: "cb-3",
@@ -115,7 +203,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "2-3 Persons",
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg"
+    image: heroBiryaniPotImg,
+    fallbackImage: "/images/hero_biryani_pot.jpg"
   },
   {
     id: "cb-4",
@@ -128,7 +217,8 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: "Medium",
     dietType: "non-veg",
     isBestseller: true,
-    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
+    image: comboFeastImg,
+    fallbackImage: "/images/combo_biryani_feast.jpg"
   },
 
   // --- MUTTON BIRYANI ---
@@ -143,7 +233,8 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
     isBestseller: true,
-    image: "/src/assets/images/dish_mutton_biryani_1793951326937.jpg"
+    image: dishMuttonBiryaniImg,
+    fallbackImage: "/images/dish_mutton_biryani.jpg"
   },
   {
     id: "mb-2",
@@ -155,7 +246,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "3-4 Persons",
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
-    image: "/src/assets/images/dish_mutton_handi_family_1793952192406.jpg"
+    image: dishMuttonHandiImg,
+    fallbackImage: "/images/dish_mutton_handi_family.jpg"
   },
 
   // --- VEG BIRYANI ---
@@ -170,7 +262,8 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: "Medium",
     dietType: "veg",
     isBestseller: true,
-    image: "/src/assets/images/dish_veg_paneer_biryani_1793951327983.jpg"
+    image: dishVegPaneerImg,
+    fallbackImage: "/images/dish_veg_paneer_biryani.jpg"
   },
   {
     id: "vb-2",
@@ -182,7 +275,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "1-2 Persons",
     spiceLevel: "Medium",
     dietType: "veg",
-    image: "/src/assets/images/dish_subz_veg_biryani_1793952191645.jpg"
+    image: dishSubzBiryaniImg,
+    fallbackImage: "/images/dish_subz_veg_biryani.jpg"
   },
 
   // --- STARTERS ---
@@ -197,7 +291,8 @@ export const MENU_ITEMS: MenuItem[] = [
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
     isBestseller: true,
-    image: "/src/assets/images/dish_tandoori_starter_1793951326949.jpg"
+    image: dishStarterKebabImg,
+    fallbackImage: "/images/dish_tandoori_starter.jpg"
   },
   {
     id: "st-2",
@@ -209,7 +304,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "2 Persons",
     spiceLevel: "Authentic Spicy",
     dietType: "non-veg",
-    image: "/src/assets/images/dish_chicken_lollipop_1793952189750.jpg"
+    image: dishLollipopImg,
+    fallbackImage: "/images/dish_chicken_lollipop.jpg"
   },
   {
     id: "st-3",
@@ -221,7 +317,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "2 Persons",
     spiceLevel: "Mild",
     dietType: "veg",
-    image: "/src/assets/images/dish_veg_paneer_biryani_1793951327983.jpg"
+    image: dishVegPaneerImg,
+    fallbackImage: "/images/dish_veg_paneer_biryani.jpg"
   },
 
   // --- DRINKS ---
@@ -235,7 +332,8 @@ export const MENU_ITEMS: MenuItem[] = [
     serves: "1 Person",
     dietType: "veg",
     isBestseller: true,
-    image: "/src/assets/images/dish_mango_lassi_1793952192796.jpg"
+    image: mangoLassiImg,
+    fallbackImage: "/images/dish_mango_lassi.jpg"
   },
   {
     id: "dr-2",
@@ -246,7 +344,8 @@ export const MENU_ITEMS: MenuItem[] = [
     portion: "300ml Glass",
     serves: "1 Person",
     dietType: "veg",
-    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
+    image: comboFeastImg,
+    fallbackImage: "/images/combo_biryani_feast.jpg"
   },
   {
     id: "dr-3",
@@ -257,66 +356,76 @@ export const MENU_ITEMS: MenuItem[] = [
     portion: "350ml Glass",
     serves: "1 Person",
     dietType: "veg",
-    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg"
+    image: comboFeastImg,
+    fallbackImage: "/images/combo_biryani_feast.jpg"
   }
 ];
 
 /* ==========================================================================
-   3. GALLERY PHOTOS DATA (EASY TO REPLACE)
+   3. GALLERY PHOTOS DATA
    ========================================================================== */
 export const GALLERY_ITEMS = [
   {
     title: "Clay Handi Dum Biryani",
     caption: "Slow-cooked over natural charcoal embers with aromatic steam",
-    image: "/src/assets/images/hero_biryani_pot_1793951325565.jpg",
+    image: heroBiryaniPotImg,
+    fallbackImage: "/images/hero_biryani_pot.jpg",
     tag: "Signature Dish"
   },
   {
     title: "Hyderabadi Chicken Dum Biryani",
     caption: "Tender spiced chicken with saffron-tinted aged basmati rice",
-    image: "/src/assets/images/dish_chicken_biryani_1793951326719.jpg",
+    image: dishChickenBiryaniImg,
+    fallbackImage: "/images/dish_chicken_biryani.jpg",
     tag: "Bestseller"
   },
   {
     title: "Royal Mutton Copper Thali",
     caption: "Succulent mutton pieces layered with birista and cashews",
-    image: "/src/assets/images/dish_mutton_biryani_1793951326937.jpg",
+    image: dishMuttonBiryaniImg,
+    fallbackImage: "/images/dish_mutton_biryani.jpg",
     tag: "Chef Special"
   },
   {
     title: "Grand Mutton Dum Handi",
     caption: "Overflowing family handi with prime bone-in tender cuts",
-    image: "/src/assets/images/dish_mutton_handi_family_1793952192406.jpg",
+    image: dishMuttonHandiImg,
+    fallbackImage: "/images/dish_mutton_handi_family.jpg",
     tag: "Family Handi"
   },
   {
     title: "Biryani Combo Feast",
     caption: "Served with cooling mint raita, mirchi ka salan, and boiled egg",
-    image: "/src/assets/images/combo_biryani_feast_1793952193238.jpg",
+    image: comboFeastImg,
+    fallbackImage: "/images/combo_biryani_feast.jpg",
     tag: "Complete Meal"
   },
   {
     title: "Crispy Chicken Lollipop",
     caption: "Spicy Indo-Chinese starters with fiery schezwan sauce",
-    image: "/src/assets/images/dish_chicken_lollipop_1793952189750.jpg",
+    image: dishLollipopImg,
+    fallbackImage: "/images/dish_chicken_lollipop.jpg",
     tag: "Starters"
   },
   {
     title: "Sizzling Tandoori Kebabs",
     caption: "Char-grilled fresh chicken tikka with mint chutney",
-    image: "/src/assets/images/dish_tandoori_starter_1793951326949.jpg",
+    image: dishStarterKebabImg,
+    fallbackImage: "/images/dish_tandoori_starter.jpg",
     tag: "Tandoor Fresh"
   },
   {
     title: "Subz Vegetable Dum Handi",
     caption: "Farm fresh garden vegetables in authentic dum spices",
-    image: "/src/assets/images/dish_subz_veg_biryani_1793952191645.jpg",
+    image: dishSubzBiryaniImg,
+    fallbackImage: "/images/dish_subz_veg_biryani.jpg",
     tag: "Pure Veg Choice"
   },
   {
     title: "Chilled Mango Lassi Kulhad",
     caption: "Rich Alphonso mango lassi topped with saffron & pistachios",
-    image: "/src/assets/images/dish_mango_lassi_1793952192796.jpg",
+    image: mangoLassiImg,
+    fallbackImage: "/images/dish_mango_lassi.jpg",
     tag: "Cooler"
   }
 ];
@@ -338,7 +447,7 @@ export default function App() {
   // Enquiry form state
   const [enquiryName, setEnquiryName] = useState('');
   const [enquiryPhone, setEnquiryPhone] = useState('');
-  const [enquiryGuests, setEnquiryGuests] = useState('Takeaway / Delivery');
+  const [enquiryGuests, setEnquiryGuests] = useState('Takeaway Pickup');
   const [enquiryMessage, setEnquiryMessage] = useState('');
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
@@ -559,17 +668,18 @@ export default function App() {
                   {/* Card Container */}
                   <div className="relative rounded-2xl overflow-hidden bg-white shadow-2xl border border-black/5">
                     <div className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full overflow-hidden bg-amber-950/20 relative">
-                      <img
-                        src="/src/assets/images/hero_biryani_pot_1793951325565.jpg"
-                        alt="Authentic Dum Biryani in traditional clay pot at Biryani Junction"
-                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                      <FoodImage
+                        src={heroBiryaniPotImg}
+                        fallbackSrc="/images/hero_biryani_pot.jpg"
+                        alt="Authentic Hyderabadi chicken dum biryani in traditional clay handi at Biryani Junction"
+                        className="w-full h-full"
+                        imgClassName="transform hover:scale-105 transition-transform duration-700"
                         loading="eager"
-                        referrerPolicy="no-referrer"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
                       
                       {/* Floating dish tag */}
-                      <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
                         <span className="text-xs font-semibold tracking-wider uppercase text-amber-300">
                           Handcrafted Recipe
                         </span>
@@ -593,8 +703,6 @@ export default function App() {
         {/* ====================================================================
             3. RATING BADGE SECTION
             Exact requirement: "4.8 ★ rated by 43 customers on Google"
-            Do not invent customer reviews or testimonials; only show the 4.8
-            rating and 43 reviews.
             ==================================================================== */}
         <section className="py-6 bg-[#F5EFE0] border-y border-[#1C1917]/10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -650,10 +758,6 @@ export default function App() {
 
         {/* ====================================================================
             4. MENU SECTION
-            Category tabs (Chicken Biryani, Mutton Biryani, Veg Biryani, Starters, Drinks).
-            Editable array at top of file.
-            Each dish has photo, name, description, price, and "Order" button that
-            opens WhatsApp with pre-filled message about that dish.
             ==================================================================== */}
         <section id="menu" className="py-16 sm:py-24 bg-[#FCF9F2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -671,7 +775,7 @@ export default function App() {
               </p>
             </div>
 
-            {/* Category Filter Tabs (Functional segmented buttons) */}
+            {/* Category Filter Tabs */}
             <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-4 mb-10 gap-2 no-scrollbar">
               {MENU_CATEGORIES.map(category => {
                 const isActive = activeCategory === category;
@@ -700,19 +804,20 @@ export default function App() {
                 >
                   {/* Photo Container */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-amber-950/10">
-                    <img
+                    <FoodImage
                       src={dish.image}
+                      fallbackSrc={dish.fallbackImage || "/images/hero_biryani_pot.jpg"}
                       alt={dish.name}
+                      className="w-full h-full"
+                      imgClassName="group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
                     />
 
                     {/* Gradient Overlay for legibility */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
                     {/* Diet indicator badge */}
-                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md shadow-xs flex items-center gap-1.5 text-[11px] font-semibold text-[#1C1917]">
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-md shadow-xs flex items-center gap-1.5 text-[11px] font-semibold text-[#1C1917] pointer-events-none">
                       <span
                         className={`w-2 h-2 rounded-full ${
                           dish.dietType === 'veg' ? 'bg-emerald-600' : 'bg-red-600'
@@ -722,7 +827,7 @@ export default function App() {
                     </div>
 
                     {/* Serves info tag */}
-                    <div className="absolute bottom-3 left-3 text-white text-xs font-medium drop-shadow-sm">
+                    <div className="absolute bottom-3 left-3 text-white text-xs font-medium drop-shadow-sm pointer-events-none">
                       <span>{dish.portion}</span>
                       <span aria-hidden="true"> · </span>
                       <span>{dish.serves}</span>
@@ -775,7 +880,7 @@ export default function App() {
               ))}
             </div>
 
-            {/* Note for custom party / bulk orders */}
+            {/* Bulk / Party order notice */}
             <div className="mt-12 p-6 rounded-2xl bg-[#F5EFE0] border border-[#1C1917]/10 text-center max-w-2xl mx-auto">
               <h4 className="font-display text-lg font-bold text-[#1C1917] mb-1">
                 Hosting a Celebration or Family Gathering?
@@ -800,11 +905,6 @@ export default function App() {
 
         {/* ====================================================================
             5. WHY CHOOSE US
-            3-4 icon cards:
-            - Fresh ingredients
-            - Authentic spices
-            - Fast service
-            - Affordable prices
             ==================================================================== */}
         <section id="why-us" className="py-16 sm:py-24 bg-white border-t border-[#1C1917]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -824,8 +924,6 @@ export default function App() {
 
             {/* 4 Feature Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              
-              {/* Card 1: Fresh Ingredients */}
               <div className="bg-[#FCF9F2] rounded-2xl p-6 sm:p-7 border border-black/5 hover:border-[#8B1B15]/20 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#8B1B15]/10 text-[#8B1B15] flex items-center justify-center mb-5">
                   <ShieldCheck className="w-6 h-6" />
@@ -838,7 +936,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Card 2: Authentic Spices */}
               <div className="bg-[#FCF9F2] rounded-2xl p-6 sm:p-7 border border-black/5 hover:border-[#8B1B15]/20 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#EA580C]/10 text-[#EA580C] flex items-center justify-center mb-5">
                   <Flame className="w-6 h-6" />
@@ -851,7 +948,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Card 3: Fast Service */}
               <div className="bg-[#FCF9F2] rounded-2xl p-6 sm:p-7 border border-black/5 hover:border-[#8B1B15]/20 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center mb-5">
                   <Zap className="w-6 h-6" />
@@ -864,7 +960,6 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Card 4: Affordable Prices */}
               <div className="bg-[#FCF9F2] rounded-2xl p-6 sm:p-7 border border-black/5 hover:border-[#8B1B15]/20 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-[#15803D]/10 text-[#15803D] flex items-center justify-center mb-5">
                   <Tag className="w-6 h-6" />
@@ -876,15 +971,14 @@ export default function App() {
                   Generous portions starting from ₹190, offering unbeatable value without sacrificing restaurant-grade taste.
                 </p>
               </div>
-
             </div>
+
           </div>
         </section>
 
 
         {/* ====================================================================
             6. GALLERY SECTION
-            Grid of food photos using high quality placeholders/assets
             ==================================================================== */}
         <section id="gallery" className="py-16 sm:py-24 bg-[#FCF9F2] border-t border-[#1C1917]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -909,19 +1003,20 @@ export default function App() {
                   key={index}
                   className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-amber-950/20 shadow-md hover:shadow-xl transition-all duration-300"
                 >
-                  <img
+                  <FoodImage
                     src={item.image}
+                    fallbackSrc={item.fallbackImage || "/images/hero_biryani_pot.jpg"}
                     alt={item.title}
+                    className="w-full h-full"
+                    imgClassName="group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    referrerPolicy="no-referrer"
                   />
                   
                   {/* Subtle darkening overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none" />
 
                   {/* Caption */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
                     <span className="text-[11px] font-semibold tracking-wider uppercase text-amber-300 mb-1 block">
                       {item.tag}
                     </span>
@@ -942,8 +1037,6 @@ export default function App() {
 
         {/* ====================================================================
             7. LOCATION & HOURS SECTION
-            Address, embedded Google Map for Mantra City 360, Talegaon Dabhade,
-            opening hours placeholder, and "Get Directions" button
             ==================================================================== */}
         <section id="location" className="py-16 sm:py-24 bg-white border-t border-[#1C1917]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1034,7 +1127,6 @@ export default function App() {
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
                   />
-                  {/* Floating directions chip */}
                   <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-md border border-black/5 hidden sm:flex items-center gap-2 text-xs font-semibold text-[#1C1917]">
                     <MapPin className="w-3.5 h-3.5 text-[#8B1B15]" />
                     <span>Mantra City 360, Talegaon Dabhade</span>
@@ -1050,8 +1142,6 @@ export default function App() {
 
         {/* ====================================================================
             8. CONTACT & ENQUIRY SECTION
-            Phone, WhatsApp, and a simple enquiry form that opens WhatsApp with
-            the entered message
             ==================================================================== */}
         <section id="contact" className="py-16 sm:py-24 bg-[#FCF9F2] border-t border-[#1C1917]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1231,7 +1321,6 @@ export default function App() {
 
       {/* ====================================================================
           9. FOOTER
-          Footer with address, phone, and "© Biryani Junction"
           ==================================================================== */}
       <footer className="bg-[#1C1917] text-white/90 pt-12 pb-16 sm:pb-12 border-t border-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1305,11 +1394,8 @@ export default function App() {
         </div>
       </footer>
 
-
       {/* ====================================================================
           10. FLOATING WHATSAPP BUTTON
-          Fixed at bottom right on every screen.
-          Respects the 15% mobile sticky cap rule with compact high-impact touch target.
           ==================================================================== */}
       <aside aria-label="Quick WhatsApp Order" className="fixed bottom-5 right-5 z-50">
         <a
